@@ -20,7 +20,7 @@ connectDB();
 const app = express();
 
 // Middleware
-app.use(cors({origin: ['http://localhost:3000','http://localhost:5173'],
+app.use(cors({origin: ['http://localhost:3000','https://solo-levelling-nu.vercel.app'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']}));  
@@ -38,16 +38,10 @@ app.use('/api/stories', require('./routes/storyRoutes'));
 
 // Health check
 app.get('/', (req, res) => {
-    res.json({
-        message: "Solo Levelling System — API is running",
-        endpoints: {
-            users: '/api/users',
-            projects: '/api/projects'
-        }
-    });
+    res.send("Solo Levelling System — API is running. OW3N.");
 });
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(`Solo Levelling server running on port ${PORT}`);
+    console.log(`Solo Levelling server running on port ${PORT}. OW3N.`);
 });
