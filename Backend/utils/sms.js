@@ -1,29 +1,13 @@
-const nodemailer = require("nodemailer");
-const dns = require("dns");
+const resend = require("resend");
+
 const dotenv = require("dotenv");
 dotenv.config();
 
-// Force Node.js to resolve DNS using IPv4 ONLY
-// This fixes "ENETUNREACH" errors on Render and other cloud providers
-// that don't support IPv6 connectivity to external SMTP servers
-dns.setDefaultResultOrder("ipv4first");
-
-const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD
-    },
-    tls: {
-        rejectUnauthorized: false
-    }
-});
+const resendClient = new resend(process.env.RESEND_KEY);
 
 const sendSMS = async (to, subject, text) => {
     try {
-        await transporter.sendMail({
+        await resendClient.emails.send({
             from: process.env.EMAIL_USER,
             to,
             subject,
