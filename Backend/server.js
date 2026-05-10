@@ -20,7 +20,8 @@ connectDB();
 const app = express();
 
 // Middleware
-app.use(cors({origin: ['http://localhost:3000','https://solo-levelling-nu.vercel.app'],
+app.use(cors({origin: ['http://localhost:3000', 'https://www.sololevelling.me',
+        'https://sololevelling.me'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']}));  

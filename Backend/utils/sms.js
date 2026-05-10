@@ -8,7 +8,7 @@ const resendClient = new Resend(process.env.RESEND_KEY);
 const sendSMS = async (to, subject, text) => {
     try {
         await resendClient.emails.send({
-            from: process.env.EMAIL_USER,
+            from:"noreply@sololevelling.me",
             to,
             subject,
             text
