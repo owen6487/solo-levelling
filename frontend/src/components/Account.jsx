@@ -50,7 +50,7 @@ function Account({Dashboard=[]}) {
                         /* Authenticated users see dashboard/profile/logout */
                         <>
                             <Link to='/dashboard' className='block px-4 py-2 text-sm text-white hover:bg-violet-800'>Dashboard</Link>
-                            <Link to='/profile' className='block px-4 py-2 text-sm text-white hover:bg-violet-800'>/dashboard/profile</Link>
+                            <Link to='/dashboard/profile' className='block px-4 py-2 text-sm text-white hover:bg-violet-800'>Profile</Link>
                             <button onClick={handlelogout} className=' block px-4 py-2 text-sm text-white hover:bg-violet-800' >Logout</button>
                         </>
                     ) : (
