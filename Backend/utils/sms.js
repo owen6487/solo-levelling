@@ -1,9 +1,9 @@
-const resend = require("resend");
+const { Resend } = require("resend");
 
 const dotenv = require("dotenv");
 dotenv.config();
 
-const resendClient = new resend(process.env.RESEND_KEY);
+const resendClient = new Resend(process.env.RESEND_KEY);
 
 const sendSMS = async (to, subject, text) => {
     try {
