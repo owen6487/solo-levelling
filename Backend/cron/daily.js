@@ -9,18 +9,18 @@ require('dotenv').config();
 cron.schedule('0 6 * * *', async () => {
     try {
         console.log("Running 6 AM Daily Quest Cron Job...");
-        const users = await User.find({ email:process.env.EMAIL_USER}); // Assuming we send to active users, or just all users
-        if (!users) {
-            // Fallback for this solo project
-            console.log("no hunter found")
+        const users = await User.find({}); 
+        if (!users || users.length === 0) {
+            console.log("No hunters found in the system.");
             return;
         }
 
-        const dailyQuests = getDailyQuests();
+
         const appUrl = process.env.APP_URL || 'http://localhost:5000';
 
         // Send to each user
         for (const user of users) {
+            const dailyQuests = getDailyQuests(user._id);
             // Generate magic links for each quest
             const formattedQuests = dailyQuests.map((q, i) => {
                 const token = jwt.sign({ id: user._id, questId: q.id }, process.env.JWT_SECRET, { expiresIn: '1d' });

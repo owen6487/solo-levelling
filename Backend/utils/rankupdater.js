@@ -181,12 +181,32 @@ const DAILY_QUEST_POOL = [
 ];
 
 /**
- * Returns today's assigned daily quests for a user (randomly selected).
- * Always returns 3 unique quests per day.
- * Quests are randomly selected from the pool to ensure variety.
+ * Returns today's assigned daily quests for a user (deterministicly selected).
+ * Always returns the same 3 unique quests per day for a specific user.
+ * This prevents quests from changing on every page reload.
  */
-const getDailyQuests = () => {
-    const shuffled = [...DAILY_QUEST_POOL].sort(() => Math.random() - 0.5);
+const getDailyQuests = (userId) => {
+    const today = new Date();
+    const dateStr = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
+    const seed = (userId || 'guest') + dateStr;
+
+    // Simple deterministic pseudo-random generator based on seed
+    let hash = 0;
+    for (let i = 0; i < seed.length; i++) {
+        hash = ((hash << 5) - hash) + seed.charCodeAt(i);
+        hash |= 0; // Convert to 32bit integer
+    }
+
+    const pseudoRandom = () => {
+        const x = Math.sin(hash++) * 10000;
+        return x - Math.floor(x);
+    };
+
+    // Shuffle and pick 3 quests
+    const shuffled = [...DAILY_QUEST_POOL]
+        .map(q => ({ ...q })) // Deep copy to prevent mutation of the global pool
+        .sort(() => pseudoRandom() - 0.5);
+
     return shuffled.slice(0, 3);
 };
 

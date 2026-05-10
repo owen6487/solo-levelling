@@ -299,7 +299,7 @@ const getDailyQuestsHandler = async (req, res) => {
         }
     
 
-        const dailyQuests = getDailyQuests();
+        const dailyQuests = getDailyQuests(user._id);
         const now = new Date();
         const lastCompleted = user.dailyQuestLastCompleted;
         let completedToday = user.completedDailyQuestsId || [];
