@@ -4,7 +4,7 @@ const API_BASE_URL = import.meta.env.VITE_REACT_APP_BACKEND_URL || 'http://local
 
 export const api = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 5000,
+  timeout: 60000, // Increased to 60 seconds to allow for Render cold starts
   headers: {
     'Content-Type': 'application/json',
   },

@@ -51,18 +51,6 @@ const authLimiter = rateLimit({
     },
 });
 
-// Rate limiter for password reset — 3 attempts per 1 hour
-const passwordResetLimiter = rateLimit({
-    windowMs: 60 * 60 * 1000,
-    max: 3,
-    message: { message: 'Too many password reset attempts, please try again after 1 hour' },
-    standardHeaders: true,
-    legacyHeaders: false,
-    handler: handleRateLimit,
-    keyGenerator: (req) => {
-        const forwarded = req.headers['x-forwarded-for']?.split(',')[0].trim();
-        return forwarded || ipKeyGenerator(req);
-    },
-});
 
-module.exports = { apiLimiter, authLimiter, passwordResetLimiter };
+
+module.exports = { apiLimiter, authLimiter};

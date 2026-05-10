@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const authMiddleware = require('../middleware/authMiddleware');
-const { apiLimiter, authLimiter, passwordResetLimiter } = require('../middleware/ratelimeter');
+const { apiLimiter, authLimiter } = require('../middleware/ratelimeter');
 const {
     register,
     login,
@@ -16,8 +16,8 @@ const {
 // Public routes with rate limiting
 router.post('/register', authLimiter, register);
 router.post('/login', authLimiter, login);
-router.post('/forgetpassword', passwordResetLimiter, forgetpassword_code);
-router.post('/resetpassword', passwordResetLimiter, resetpassword);
+router.post('/forgetpassword', forgetpassword_code);
+router.post('/resetpassword', resetpassword);
 
 // Protected routes (require JWT)
 router.post('/logout', authMiddleware, logout);
